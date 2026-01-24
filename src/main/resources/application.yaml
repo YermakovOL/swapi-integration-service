@@ -1,0 +1,14 @@
+
+spring:
+  application:
+    name: swapi-integration-service
+
+
+  cloud:
+    openfeign:
+      client:
+        config:
+          swapiClient:
+            url: https://swapi.dev
+
+debug: true

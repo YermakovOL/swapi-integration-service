@@ -1,0 +1,231 @@
+openapi: 3.1.0
+info:
+  title: Star Wars Characters API
+  description: |
+    REST API integrating with SWAPI (Star Wars API).
+    Provides public character endpoints, mocked authentication,
+    and protected favourites endpoint.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Local environment
+
+security:
+  - bearerAuth: []
+
+paths:
+  /people:
+    get:
+      summary: Get Star Wars characters
+      description: |
+        Returns a paginated list of Star Wars characters fetched from SWAPI.
+        Results may be cached to avoid refetching the same page.
+      parameters:
+        - name: page
+          in: query
+          description: Page number (SWAPI pagination)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PeoplePage'
+        '400':
+          description: Invalid pagination parameters
+        '502':
+          description: SWAPI integration error
+
+  /people/{id}:
+    get:
+      summary: Get character details
+      description: Returns details for a single Star Wars character.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: Character details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonDetails'
+        '404':
+          description: Character not found
+        '502':
+          description: SWAPI integration error
+
+  /auth/login:
+    post:
+      summary: Mocked login
+      description: Returns mocked access and refresh tokens.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Invalid credentials
+
+  /auth/refresh:
+    post:
+      summary: Mocked token refresh
+      description: Returns a new access token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshRequest'
+      responses:
+        '200':
+          description: Token refreshed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshResponse'
+        '401':
+          description: Invalid refresh token
+
+  /auth/logout:
+    post:
+      summary: Mocked logout
+      description: Invalidates access token stored in memory.
+      responses:
+        '204':
+          description: Logged out successfully
+
+  /favourites:
+    get:
+      summary: Get favourite characters
+      description: |
+        Returns a static list of favourite characters.
+        Accessible only for authenticated users.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: List of favourites
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FavouriteCharacter'
+        '401':
+          description: Unauthorized
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    PeoplePage:
+      type: object
+      properties:
+        count:
+          type: integer
+        next:
+          type: string
+          nullable: true
+        previous:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonSummary'
+
+    PersonSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
+    PersonDetails:
+      type: object
+      properties:
+        name:
+          type: string
+        height:
+          type: number
+          description: Height in meters
+        mass:
+          type: number
+          description: Mass in kilograms
+        birth_year:
+          type: string
+        number_of_films:
+          type: integer
+        date_added:
+          type: string
+          format: date
+          example: 12-03-2024
+
+    LoginRequest:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+
+    AuthResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+            username:
+              type: string
+
+    RefreshRequest:
+      type: object
+      required: [refreshToken]
+      properties:
+        refreshToken:
+          type: string
+
+    RefreshResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+
+    FavouriteCharacter:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
