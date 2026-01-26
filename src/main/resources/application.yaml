@@ -1,4 +1,3 @@
-
 spring:
   application:
     name: swapi-integration-service
@@ -10,5 +9,13 @@ spring:
         config:
           swapiClient:
             url: https://swapi.dev
+  cache:
+    type: caffeine
 
-debug: true
+api:
+  format:
+      people-api:
+        dateFormat: dd-MM-yyyy
+        massFormat: "%s kg"
+        heightFormat: "%s meters"
+

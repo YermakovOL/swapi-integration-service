@@ -1,10 +1,7 @@
 openapi: 3.1.0
 info:
   title: Star Wars Characters API
-  description: |
-    REST API integrating with SWAPI (Star Wars API).
-    Provides public character endpoints, mocked authentication,
-    and protected favourites endpoint.
+  description: REST API integrating with SWAPI (Star Wars API).
   version: 1.0.0
 
 servers:
@@ -18,34 +15,40 @@ paths:
   /people:
     get:
       summary: Get Star Wars characters
-      description: |
-        Returns a paginated list of Star Wars characters fetched from SWAPI.
-        Results may be cached to avoid refetching the same page.
       parameters:
         - name: page
           in: query
-          description: Page number (SWAPI pagination)
           required: false
           schema:
             type: integer
             minimum: 1
-            example: 1
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PeoplePage'
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PersonDetails'
         '400':
           description: Invalid pagination parameters
         '502':
           description: SWAPI integration error
-
   /people/{id}:
     get:
       summary: Get character details
-      description: Returns details for a single Star Wars character.
       parameters:
         - name: id
           in: path
@@ -68,7 +71,6 @@ paths:
   /auth/login:
     post:
       summary: Mocked login
-      description: Returns mocked access and refresh tokens.
       requestBody:
         required: true
         content:
@@ -88,7 +90,6 @@ paths:
   /auth/refresh:
     post:
       summary: Mocked token refresh
-      description: Returns a new access token.
       requestBody:
         required: true
         content:
@@ -108,7 +109,6 @@ paths:
   /auth/logout:
     post:
       summary: Mocked logout
-      description: Invalidates access token stored in memory.
       responses:
         '204':
           description: Logged out successfully
@@ -116,9 +116,6 @@ paths:
   /favourites:
     get:
       summary: Get favourite characters
-      description: |
-        Returns a static list of favourite characters.
-        Accessible only for authenticated users.
       security:
         - bearerAuth: []
       responses:
@@ -182,7 +179,7 @@ components:
           type: integer
         date_added:
           type: string
-          format: date
+          pattern: '^\\d{2}-\\d{2}-\\d{4}$'
           example: 12-03-2024
 
     LoginRequest:
