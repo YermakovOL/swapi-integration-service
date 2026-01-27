@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 import yermakov.oleksii.swapiintegrationservice.WireMockConfig;
@@ -12,12 +13,16 @@ import yermakov.oleksii.swapiintegrationservice.WireMockConfig;
 @SpringBootTest
 @AutoConfigureMockMvc
 @Import(WireMockConfig.class)
-public class ComponentTest {
+public abstract class ComponentTest {
   @Autowired MockMvc mockMvc;
   @Autowired WireMockServer wireMock;
+  @Autowired CacheManager cacheManager;
 
   @BeforeEach
-  public void setUp(){
+  public void setUp() {
+    cacheManager.getCacheNames()
+              .forEach(name -> cacheManager.getCache(name).clear());
     wireMock.resetRequests();
+    wireMock.resetScenarios();
   }
 }

@@ -11,11 +11,12 @@ spring:
             url: https://swapi.dev
   cache:
     type: caffeine
-
+    cache-names: people-api
+    caffeine:
+      spec: maximumSize=300,expireAfterWrite=15m,recordStats
 api:
   format:
       people-api:
         dateFormat: dd-MM-yyyy
         massFormat: "%s kg"
         heightFormat: "%s meters"
-

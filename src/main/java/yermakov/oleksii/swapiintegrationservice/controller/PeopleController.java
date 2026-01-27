@@ -2,7 +2,6 @@ package yermakov.oleksii.swapiintegrationservice.controller;
 
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +15,7 @@ import yermakov.oleksii.swapiintegrationservice.service.PeopleService;
 @RequestMapping(PeopleController.URL)
 @RequiredArgsConstructor
 public class PeopleController {
-  public static final String URL = "/person";
+  public static final String URL = "/people";
   private final PeopleService peopleService;
 
   @GetMapping

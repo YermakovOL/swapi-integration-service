@@ -2,8 +2,10 @@
   "mappings": [
     {
       "name": "SWAPI - Get People Page 1",
+      "scenarioName": "PeopleListApi",
+      "requiredScenarioState": "Started",
       "metadata": {
-        "description": "Returns the second page of characters including Luke Skywalker and C-3PO",
+        "description": "Returns the first page of characters",
         "test_group": "pagination_flow"
       },
       "request": {
@@ -87,8 +89,10 @@
     },
     {
       "name": "SWAPI - Get People Page 2",
+      "scenarioName": "PeopleListApi",
+      "requiredScenarioState": "Started",
       "metadata": {
-        "description": "Returns the second page of characters including R2-D2 and Darth Vader",
+        "description": "Returns the second page of characters",
         "test_group": "pagination_flow"
       },
       "request": {
@@ -168,8 +172,10 @@
     },
     {
       "name": "SWAPI - Get People Page 3",
+      "scenarioName": "PeopleListApi",
+      "requiredScenarioState": "Started",
       "metadata": {
-        "description": "Returns the third page of characters including Leia and Owen Lars",
+        "description": "Returns the third page of characters",
         "test_group": "pagination_flow"
       },
       "request": {
@@ -240,6 +246,39 @@
             }
           ]
         }
+      }
+    },
+    {
+      "name": "SWAPI - Get People List 404",
+      "scenarioName": "PeopleListApi",
+      "requiredScenarioState": "NOT_FOUND",
+      "metadata": {
+        "description": "Simulates 404 Not Found for the list endpoint",
+        "test_group": "error_handling"
+      },
+      "request": {
+        "method": "GET",
+        "urlPath": "/api/people"
+      },
+      "response": {
+        "status": 404
+      }
+    },
+    {
+      "name": "SWAPI - Get People 503 Error",
+      "scenarioName": "PeopleListApi",
+      "requiredScenarioState": "ERROR",
+      "metadata": {
+        "description": "Simulates 503 Service Unavailable",
+        "test_group": "error_handling"
+      },
+      "request": {
+        "method": "GET",
+        "urlPath": "/api/people"
+
+      },
+      "response": {
+        "status": 503
       }
     }
   ]

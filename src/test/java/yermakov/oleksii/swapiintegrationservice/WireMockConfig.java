@@ -3,6 +3,7 @@ package yermakov.oleksii.swapiintegrationservice;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.common.ConsoleNotifier;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -12,16 +13,8 @@ import org.springframework.test.context.DynamicPropertyRegistrar;
 @TestConfiguration
 public class WireMockConfig {
 
-  public static RequestPatternBuilder peoplePage1() {
-    return getRequestedFor(urlMatching("/api/people")).withQueryParam("page", equalTo("1"));
-  }
-
-  public static RequestPatternBuilder peoplePage2() {
-    return getRequestedFor(urlMatching("/api/people")).withQueryParam("page", equalTo("2"));
-  }
-
-  public static RequestPatternBuilder peoplePage3() {
-    return getRequestedFor(urlMatching("/api/people")).withQueryParam("page", equalTo("3"));
+  public static RequestPatternBuilder peopleListRequest() {
+    return getRequestedFor(urlPathEqualTo("/api/people"));
   }
 
   public static RequestPatternBuilder anyRequest() {
@@ -30,7 +23,8 @@ public class WireMockConfig {
 
   @Bean(initMethod = "start", destroyMethod = "stop")
   public WireMockServer wireMockServer() {
-    return new WireMockServer(WireMockConfiguration.options().dynamicPort());
+    return new WireMockServer(
+        WireMockConfiguration.options().dynamicPort().notifier(new ConsoleNotifier(true)));
   }
 
   @Bean

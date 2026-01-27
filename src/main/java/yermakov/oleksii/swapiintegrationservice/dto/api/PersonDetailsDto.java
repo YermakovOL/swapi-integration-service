@@ -13,7 +13,7 @@ public class PersonDetailsDto {
 
   private String birth_year;
 
-  private String number_of_films;
+  private Integer number_of_films;
 
   private String date_added;
 }
