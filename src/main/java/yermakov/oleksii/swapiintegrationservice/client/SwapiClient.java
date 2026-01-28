@@ -10,9 +10,9 @@ import yermakov.oleksii.swapiintegrationservice.dto.swapi.PeopleList;
 @FeignClient(name = "swapiClient", configuration = SwapiClientConfig.class)
 public interface SwapiClient {
 
-    @GetMapping("api/people")
-    PeopleList getPeople(@RequestParam("page") int page);
+  @GetMapping("api/people")
+  PeopleList getPeople(@RequestParam("page") int page);
 
-    @GetMapping("api/people/{id}")
-    PeopleInstance getPeopleById(@PathVariable("id") String id);
+  @GetMapping("api/people/{id}")
+  PeopleInstance getPeopleById(@PathVariable("id") String id);
 }

@@ -20,7 +20,7 @@ public class PeopleController {
 
   @GetMapping
   public PageableResponseDto<PersonDetailsDto> viewPeople(
-          @RequestParam(defaultValue = "1") @Min(1) int page) {
+      @RequestParam(defaultValue = "1") @Min(1) int page) {
     return peopleService.getPeople(page);
   }
 

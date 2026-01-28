@@ -1,30 +1,24 @@
 package yermakov.oleksii.swapiintegrationservice.controller;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import yermakov.oleksii.swapiintegrationservice.ex.UnauthorizedException;
 import yermakov.oleksii.swapiintegrationservice.service.AuthService;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/favourites")
+@RequestMapping(FavoritesController.URL)
 @RequiredArgsConstructor
-class FavouritesController {
+class FavoritesController {
 
-    private final AuthService authService;
+  public static final String URL = "/favourites";
+  private final AuthService authService;
 
-    @GetMapping
-    public List<String> getFavourites(@RequestHeader("Authorization") String authorization) {
-        if (!authService.isAccessTokenValid(authorization)) {
-            boolean refreshed = authService.tryRefreshToken();
-            if (!refreshed) {
-                throw new UnauthorizedException();
-            }
-        }
-        return authService.getFavouriteCharacters();
-    }
+  @GetMapping
+  public List<String> getFavourites(
+      @RequestHeader(name = "Authorization", required = false) String authorization) {
+    return authService.getFavouriteCharacters(authorization);
+  }
 }

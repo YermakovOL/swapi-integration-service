@@ -2,7 +2,6 @@ spring:
   application:
     name: swapi-integration-service
 
-
   cloud:
     openfeign:
       client:
@@ -14,7 +13,11 @@ spring:
     cache-names: people-api
     caffeine:
       spec: maximumSize=300,expireAfterWrite=15m,recordStats
+
 api:
+  auth:
+    access-ms: 90000
+    refresh-ms: 604800000
   format:
       people-api:
         dateFormat: dd-MM-yyyy

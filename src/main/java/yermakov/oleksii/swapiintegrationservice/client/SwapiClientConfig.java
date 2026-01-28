@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwapiClientConfig {
 
-    @Bean
-    ErrorDecoder errorDecoder(){
-        return new SwapiErrorDecoder();
-    }
+  @Bean
+  ErrorDecoder errorDecoder() {
+    return new SwapiErrorDecoder();
+  }
 }

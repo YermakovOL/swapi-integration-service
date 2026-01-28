@@ -2,4 +2,4 @@ package yermakov.oleksii.swapiintegrationservice.dto.api;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record LoginRequest(@NotBlank String username, @NotBlank String password) {}
+public record RefreshTokenRequest(@NotBlank String refreshToken) {}

@@ -4,11 +4,11 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import yermakov.oleksii.swapiintegrationservice.client.SwapiClient;
 import yermakov.oleksii.swapiintegrationservice.dto.PageableResponseDto;
 import yermakov.oleksii.swapiintegrationservice.dto.api.PersonDetailsDto;
 import yermakov.oleksii.swapiintegrationservice.dto.swapi.PeopleInstance;
 import yermakov.oleksii.swapiintegrationservice.dto.swapi.PeopleList;
-import yermakov.oleksii.swapiintegrationservice.client.SwapiClient;
 import yermakov.oleksii.swapiintegrationservice.service.mapper.PeopleMapper;
 
 @Service

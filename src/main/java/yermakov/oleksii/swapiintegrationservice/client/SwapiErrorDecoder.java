@@ -15,11 +15,11 @@ public class SwapiErrorDecoder implements ErrorDecoder {
   private static final Pattern PEOPLE_ITEM_PATTERN =
       Pattern.compile("(?s).*/people/[^/?]+(\\?.*)?");
 
-    public SwapiErrorDecoder() {
-        defaultErrorDecoder = new Default();
-    }
+  public SwapiErrorDecoder() {
+    defaultErrorDecoder = new Default();
+  }
 
-    @Override
+  @Override
   public Exception decode(String methodKey, Response response) {
 
     Exception decoded = defaultErrorDecoder.decode(methodKey, response);

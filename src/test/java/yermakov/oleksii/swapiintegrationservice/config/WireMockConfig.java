@@ -1,4 +1,4 @@
-package yermakov.oleksii.swapiintegrationservice;
+package yermakov.oleksii.swapiintegrationservice.config;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
@@ -29,8 +29,7 @@ public class WireMockConfig {
 
   @Bean
   public DynamicPropertyRegistrar wireMockPropertyRegistrar(WireMockServer server) {
-    return registry -> {
-      registry.add("spring.cloud.openfeign.client.config.swapiClient.url", server::baseUrl);
-    };
+    return registry ->
+        registry.add("spring.cloud.openfeign.client.config.swapiClient.url", server::baseUrl);
   }
 }

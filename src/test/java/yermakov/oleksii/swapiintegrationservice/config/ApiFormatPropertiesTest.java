@@ -45,7 +45,7 @@ class ApiFormatPropertiesTest {
     var violations = validator.validate(properties);
 
     assertThat(violations).hasSize(1);
-    assertThat(violations.iterator().next().getPropertyPath().toString()).isEqualTo("dateFormat");
+    assertThat(violations.iterator().next().getPropertyPath()).hasToString("dateFormat");
   }
 
   @ParameterizedTest
@@ -58,7 +58,7 @@ class ApiFormatPropertiesTest {
 
     assertThat(violations).hasSize(1);
     var violation = violations.iterator().next();
-    assertThat(violation.getPropertyPath().toString()).isEqualTo("massFormat");
+    assertThat(violation.getPropertyPath()).hasToString("massFormat");
     assertThat(violation.getMessage()).contains("Invalid format string");
   }
 
@@ -72,7 +72,7 @@ class ApiFormatPropertiesTest {
 
     assertThat(violations).hasSize(1);
     var violation = violations.iterator().next();
-    assertThat(violation.getPropertyPath().toString()).isEqualTo("heightFormat");
+    assertThat(violation.getPropertyPath()).hasToString("heightFormat");
     assertThat(violation.getMessage()).contains("Invalid format string");
   }
 

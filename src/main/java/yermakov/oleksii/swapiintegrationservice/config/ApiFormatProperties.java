@@ -3,8 +3,8 @@ package yermakov.oleksii.swapiintegrationservice.config;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
-import yermakov.oleksii.swapiintegrationservice.constraint.ValidDateTimeFormat;
 import yermakov.oleksii.swapiintegrationservice.constraint.StringFormat;
+import yermakov.oleksii.swapiintegrationservice.constraint.ValidDateTimeFormat;
 
 @ConfigurationProperties("api.format.people-api")
 @Validated

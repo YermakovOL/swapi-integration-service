@@ -1,5 +1,7 @@
 package yermakov.oleksii.swapiintegrationservice.controller;
 
+import jakarta.validation.Valid;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,31 +11,31 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import yermakov.oleksii.swapiintegrationservice.dto.api.AuthResponse;
 import yermakov.oleksii.swapiintegrationservice.dto.api.LoginRequest;
+import yermakov.oleksii.swapiintegrationservice.dto.api.RefreshTokenRequest;
 import yermakov.oleksii.swapiintegrationservice.service.AuthService;
 
-import java.util.Map;
-
 @RestController
-@RequestMapping("/auth")
+@RequestMapping(AuthController.URL)
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthService authService;
+  public static final String URL = "/auth";
 
-    @PostMapping("/login")
-    public AuthResponse login(@RequestBody LoginRequest request) {
-        return authService.login(request);
-    }
+  private final AuthService authService;
 
-    @PostMapping("/refresh")
-    public Map<String, String> refresh() {
-        return authService.refreshToken();
-    }
+  @PostMapping("/login")
+  public AuthResponse login(@RequestBody @Valid LoginRequest request) {
+    return authService.login(request);
+  }
 
-    @PostMapping("/logout")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void logout() {
-        authService.logout();
-    }
+  @PostMapping("/refresh")
+  public Map<String, String> refresh(@RequestBody @Valid RefreshTokenRequest request) {
+    return authService.refreshToken(request.refreshToken());
+  }
+
+  @PostMapping("/logout")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void logout(@RequestBody @Valid RefreshTokenRequest request) {
+    authService.logout(request.refreshToken());
+  }
 }
-

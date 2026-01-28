@@ -1,5 +1,6 @@
 package yermakov.oleksii.swapiintegrationservice.dto.api;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
@@ -11,9 +12,12 @@ public class PersonDetailsDto {
 
   private String mass;
 
-  private String birth_year;
+  @JsonProperty("birth_year")
+  private String birthYear;
 
-  private Integer number_of_films;
+  @JsonProperty("number_of_films")
+  private Integer numberOfFilms;
 
-  private String date_added;
+  @JsonProperty("date_added")
+  private String dateAdded;
 }

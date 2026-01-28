@@ -7,7 +7,6 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -17,10 +16,7 @@ import yermakov.oleksii.swapiintegrationservice.config.ApiFormatProperties;
 import yermakov.oleksii.swapiintegrationservice.dto.api.PersonDetailsDto;
 import yermakov.oleksii.swapiintegrationservice.dto.swapi.PeopleInstance;
 
-@Mapper(
-    componentModel = SPRING,
-    injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-    unmappedTargetPolicy = ReportingPolicy.ERROR)
+@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.ERROR)
 @Slf4j
 public abstract class PeopleMapper {
 
@@ -30,8 +26,8 @@ public abstract class PeopleMapper {
 
   @Mapping(target = "height", source = "height", qualifiedByName = "formatHeight")
   @Mapping(target = "mass", source = "mass", qualifiedByName = "formatMass")
-  @Mapping(target = "number_of_films", source = "films", qualifiedByName = "countFilms")
-  @Mapping(target = "date_added", source = "created", qualifiedByName = "formatDate")
+  @Mapping(target = "numberOfFilms", source = "films", qualifiedByName = "countFilms")
+  @Mapping(target = "dateAdded", source = "created", qualifiedByName = "formatDate")
   public abstract PersonDetailsDto mapToResponse(PeopleInstance peopleInstance);
 
   @Named("formatHeight")
