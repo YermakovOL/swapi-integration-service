@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 import yermakov.oleksii.swapiintegrationservice.service.AuthService;
 
 @RestController
-@RequestMapping(FavoritesController.URL)
+@RequestMapping(FavouritesController.URL)
 @RequiredArgsConstructor
-class FavoritesController {
+class FavouritesController {
 
   public static final String URL = "/favourites";
   private final AuthService authService;
 
   @GetMapping
-  public List<String> getFavourites(
+  public List<String> getFavorites(
       @RequestHeader(name = "Authorization", required = false) String authorization) {
     return authService.getFavouriteCharacters(authorization);
   }

@@ -34,7 +34,7 @@ class FavouritesControllerComponentTest extends ComponentTest {
     String accessToken = authResponse.accessToken();
 
     mockMvc
-        .perform(get(FavoritesController.URL).header("Authorization", "Bearer " + accessToken))
+        .perform(get(FavouritesController.URL).header("Authorization", "Bearer " + accessToken))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.size()", is(3)))
         .andExpect(jsonPath("$", hasItems("Luke Skywalker", "R2-D2", "Leia Organa")));
@@ -45,13 +45,13 @@ class FavouritesControllerComponentTest extends ComponentTest {
     String fakeToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIn0.SimulatedSignature";
 
     mockMvc
-        .perform(get(FavoritesController.URL).header("Authorization", "Bearer " + fakeToken))
+        .perform(get(FavouritesController.URL).header("Authorization", "Bearer " + fakeToken))
         .andExpect(status().isUnauthorized())
         .andExpect(jsonPath("$.errorMessage", containsString("Invalid access token")));
   }
 
   @Test
   void shouldReturn401_WhenNoHeader() throws Exception {
-    mockMvc.perform(get(FavoritesController.URL)).andExpect(status().isUnauthorized());
+    mockMvc.perform(get(FavouritesController.URL)).andExpect(status().isUnauthorized());
   }
 }
